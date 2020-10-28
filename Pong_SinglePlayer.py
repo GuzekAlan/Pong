@@ -14,10 +14,8 @@ def welcome():
 
 welcome()
 
-
 display_width = 1000
 display_height = 800
-
 
 word = ""
 f = open("h_s.txt", "r")
@@ -43,6 +41,7 @@ white = (255, 255, 255)
 
 direction = [-1, 1]
 
+
 def displayText(text, size, x, y):
     fontText = pygame.font.Font('freesansbold.ttf', size)
     TextSurface = fontText.render(text, True, white)
@@ -50,8 +49,10 @@ def displayText(text, size, x, y):
     TextRect.center = (x, y)
     gameDisplay.blit(TextSurface, TextRect)
 
+
 def ball(x, y, r):
     pygame.draw.circle(gameDisplay, white, (x, y), r)
+
 
 def muter():
     global is_paused
@@ -79,8 +80,8 @@ def endgame():
     pygame.mixer.music.play()
     gameDisplay.fill(black)
     h = open("h_s.txt", "r")
-    displayText("Your score: " + str(player1_score), 70, (display_width/2), (display_height/2))
-    displayText(("Best score: " + h.readline()), 50, (display_width / 2), (display_height*2/3))
+    displayText("Your score: " + str(player1_score), 70, (display_width / 2), (display_height / 2))
+    displayText(("Best score: " + h.readline()), 50, (display_width / 2), (display_height * 2 / 3))
     h.close()
     pygame.display.update()
     pygame.time.wait(3000)
@@ -89,14 +90,12 @@ def endgame():
     game()
 
 
-
-
 def paddle(x, y, width, height):
     pygame.draw.rect(gameDisplay, white, [x, y, width, height])
 
 
 def game_loop():
-    #pygame.mixer.music.load("popstars.mp3")
+    # pygame.mixer.music.load("popstars.mp3")
     pygame.mixer.music.load("baddest.mp3")
     pygame.mixer.music.set_volume(0.4)
     pygame.mixer.music.play()
@@ -111,12 +110,11 @@ def game_loop():
     ball_y = int(display_height / 2)
 
     ball_speed = 2
-    ball_speedX = ball_speed*direction[random.randint(0, 1)]
-    ball_speedY = ball_speed+direction[random.randint(0, 1)]
+    ball_speedX = ball_speed * direction[random.randint(0, 1)]
+    ball_speedY = ball_speed + direction[random.randint(0, 1)]
 
     paddle_width = 10
-    paddle_height = int(display_height/4)
-
+    paddle_height = int(display_height / 4)
 
     paddle1_x = 0
     paddle1_y = int(display_height / 3)
@@ -129,16 +127,12 @@ def game_loop():
         gameDisplay.fill(black)
         ball(ball_x, ball_y, ball_r)
         paddle(paddle1_x, paddle1_y, paddle_width, paddle_height)
-        displayText((player1_name + ": " + str(player1_score)), 30, display_width/2, 40)
-
-
+        displayText((player1_name + ": " + str(player1_score)), 30, display_width / 2, 40)
 
         if firstTime:
             pygame.display.update()
             pygame.time.wait(2000)
             firstTime = False
-
-
 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -161,11 +155,11 @@ def game_loop():
                 pygame.quit()
                 exit()
 
-        if ball_y < 0+ball_r:
+        if ball_y < 0 + ball_r:
             ball_speedY *= -1
-        if ball_y > display_height-ball_r:
+        if ball_y > display_height - ball_r:
             ball_speedY *= -1
-        if ball_x > display_width-ball_r:
+        if ball_x > display_width - ball_r:
             ball_speedX += -1
 
         if ball_x <= 0 + paddle_width and ball_x >= 0:
@@ -173,7 +167,7 @@ def game_loop():
                 ball_speedX *= -1
                 ball_speedY = ball_speedY + random.randint(-1, 1)
                 player1_score += 1
-                if player1_score%3 == 0 and player1_score != 0:
+                if player1_score % 3 == 0 and player1_score != 0:
                     ball_speedX *= 1.5
                 black = (random.randint(0, 150), random.randint(0, 150), random.randint(0, 150))
             else:
@@ -181,7 +175,7 @@ def game_loop():
 
         paddle1_y += paddle1_speed
         if paddle1_y < 0: paddle1_y = 0
-        if paddle1_y > display_height-paddle_height: paddle1_y = display_height-paddle_height
+        if paddle1_y > display_height - paddle_height: paddle1_y = display_height - paddle_height
         ball_x += int(ball_speedX)
         ball_y -= int(ball_speedY)
 
@@ -192,14 +186,15 @@ def game_loop():
 def game():
     while True:
         gameDisplay.fill(black)
-        displayText("P O N K", 100, display_width/2, display_height/2)
+        displayText("P O N K", 100, display_width / 2, display_height / 2)
         pygame.display.update()
         for event in pygame.event.get():
-             if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     exit()
                 if event.key == pygame.K_SPACE:
                     game_loop()
+
 
 game()
