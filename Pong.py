@@ -6,6 +6,17 @@ player2_name = "PLAYER 2"
 win_cap = 3
 is_paused = True
 
+display_width = 1200
+display_height = 800
+
+player1_score = 0
+player2_score = 0
+
+black = (0, 0, 0)
+white = (255, 255, 255)
+
+direction = [-1, 1]
+
 
 def welcome():
     global win_cap
@@ -17,26 +28,9 @@ def welcome():
     win_cap = int(input("How much \" rounds \":  "))
 
 
-welcome()
 
-pygame.init()
 
-display_width = 1200
-display_height = 800
 
-player1_score = 0
-player2_score = 0
-
-gameDisplay = pygame.display.set_mode((display_width, display_height), pygame.FULLSCREEN)
-pygame.display.set_caption("Ponk!")
-icon = pygame.image.load("icon.jpg")
-pygame.display.set_icon(icon)
-clock = pygame.time.Clock()
-
-black = (0, 0, 0)
-white = (255, 255, 255)
-
-direction = [-1, 1]
 
 
 def displayText(text, size, x, y):
@@ -53,7 +47,7 @@ def ball(x, y, r):
 
 def endgame(player):
     pygame.mixer.music.stop()
-    pygame.mixer.music.load("win.mp3")
+    pygame.mixer.music.load("music/win.mp3")
     pygame.mixer.music.play()
     gameDisplay.fill(black)
     displayText(player + " WINS!!", 70, (display_width / 2), (display_height / 2))
@@ -81,7 +75,7 @@ def paddle(x, y, width, height):
 
 
 def game_loop():
-    pygame.mixer.music.load("popstars.mp3")
+    pygame.mixer.music.load("music/popstars.mp3")
     pygame.mixer.music.set_volume(0.4)
     pygame.mixer.music.play()
 
@@ -207,5 +201,12 @@ def game():
                 if event.key == pygame.K_SPACE:
                     game_loop()
 
-
-game()
+if __name__ == '__main__':
+    welcome()
+    pygame.init()
+    gameDisplay = pygame.display.set_mode((display_width, display_height))
+    pygame.display.set_caption("Ponk!")
+    icon = pygame.image.load("icons/icon.jpg")
+    pygame.display.set_icon(icon)
+    clock = pygame.time.Clock()
+    game()
